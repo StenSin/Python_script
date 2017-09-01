@@ -5,7 +5,10 @@ Spyder Editor
 This is a temporary script file.
 """
 import sys
+#import collections
+from pick import pick
 print (sys.version)
+
 
 profile = []
         
@@ -21,7 +24,7 @@ profile.append(hex(sequence))
 profile.append(hex(0xFE))
 
 
-days=input("What days will it be working?").lower()
+days=input("What days will it be working? (ho,m,tu,w,th,f,sa,su) ?").lower()
 
 week=0
 
@@ -44,21 +47,26 @@ if ("su" in days)==True:
 
 hex_week=hex(week)
 profile.append(hex_week)
-
+time_list=[0]
 i1=0
 while i1<10:
-     input1=input("Do you want to add a step and dim time (y/n?")     
+     input1=input("Do you want to add a step and dim time (y/n) ?\n")     
      if input1=="y":
-         time=input("What is the step time?")
+         time=input("What is the step time (hhmm) ?")
+         time_ctrl=int(time)
+         time_list.append(time_ctrl)
          if len(time)<4:
              print ("Too short step time")
+             break
+         elif (time_ctrl<time_list[len(time_list)-2]):
+             print("Step time earlier than previous step time")
              break
          else: 
              time1= 6* int (time[:2])
              time2=int(time[2])
              time=hex(time1+time2)
              profile.append(time)
-             dim_time=input("What is the dimming?")
+             dim_time=input("What is the dimming(0-100)?")
              if int(dim_time)<0:
                  dim_time=0;
                  profile.append(hex(int(dim_time)))
@@ -77,9 +85,5 @@ def print_all (file):
          print(i[2:],end="")
 i2=0
 print (profile)
-print (week)
-print (hex_week)
-print(time1)
-print (time3)
 print ("08",end="")
 print_all(profile)
